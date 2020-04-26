@@ -1,17 +1,3 @@
-// Testing exceptions
-module.exports.registerUser = function (username) {
-  if (!username) throw new Error('Username is required.');
-
-  return { id: new Date().getTime(), username: username };
-};
-
-// Mock functions
-module.exports.applyDiscount = function (order) {
-  const customer = db.getCustomerSync(order.customerId);
-
-  if (customer.points > 10) order.totalPrice *= 0.9;
-};
-
 // Mock functions
 module.exports.notifyCustomer = function (order) {
   const customer = db.getCustomerSync(order.customerId);

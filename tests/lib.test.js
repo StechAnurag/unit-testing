@@ -1,4 +1,5 @@
 const lib = require('../lib');
+const db = require('../db');
 
 describe('absolute', () => {
   it('should return a +ve number if input is +ve', () => {
@@ -60,5 +61,35 @@ describe('getProduct', () => {
     expect(result).toMatchObject({ id: 1, price: 10 }); // checks if results contains the expected kies:values
 
     expect(result).toHaveProperty('name', 'soap'); // check for individual property
+  });
+});
+
+describe('registerUser', () => {
+  it('should throw exception if username is falsy', () => {
+    const args = [null, undefined, 0, NaN, '', false];
+    args.forEach(a => {
+      expect(() => {
+        lib.registerUser(a);
+      }).toThrow();
+    });
+  });
+
+  it('should return a user object if valid username is passed', () => {
+    const result = lib.registerUser('anmol');
+    expect(result).toMatchObject({ username: 'anmol' });
+    expect(result.id).toBeGreaterThan(0);
+  });
+});
+
+describe('applyDiscount', () => {
+  it('should apply 10% discount if customer has more than 10 points', () => {
+    db.getCustomerSync = function (customerId) {
+      console.log('Fake reading customer...');
+      return { id: customerId, points: 11 };
+    };
+
+    const order = { customerId: 1, totalPrice: 10 };
+    lib.applyDiscount(order);
+    expect(order.totalPrice).toBe(9);
   });
 });
