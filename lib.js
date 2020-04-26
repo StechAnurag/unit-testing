@@ -2,20 +2,7 @@
 // const mail = require("./mail");
 
 // Testing numbers
-module.exports.absolute = function (number) {
-  /* 
-  if (number > 0) return number;
-  if (number < 0) return -number;
-  return 0; 
-  */
+module.exports.absolute = number => (number >= 0 ? number : -number);
 
-  //First Refactoring
-  /* 
-  if (number >= 0) return number;
-
-  return -number; 
-  */
-
-  //Second Refactoring
-  return number >= 0 ? number : -number;
-};
+// Testing strings
+module.exports.greet = name => 'Welcome ' + name;
